@@ -48,16 +48,17 @@ class DnsSpeedSensor(Sensor):
         Sensor.__init__(self, kwargs)
 
     def sense(self):
-        import socket
+        import socket, time
 
         res = dict()
+        t = time.time()
         try:
             socket.getaddrinfo(self._address, None)
             res["result"] = "success"
         except socket.gaierror:
             res["result"] = "error"
 
-        res["time"] = 0.0
+        res["time"] = time.time() - t
         return res
         
 class SpeedSensor(Sensor):
