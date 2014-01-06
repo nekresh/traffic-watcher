@@ -41,11 +41,29 @@ class PingSensor(Sensor):
         if process.returncode <> 0:
             res["failed"] = True
         return res
+
+class DnsSpeedSensor(Sensor):
+    def __init__(self, address=None, **kwargs):
+        self._address = address
+        Sensor.__init__(self, kwargs)
+
+    def sense(self):
+        import socket
+
+        res = dict()
+        try:
+            socket.getaddrinfo(self._address, None)
+            res["result"] = "success"
+        except socket.gaierror:
+            res["result"] = "error"
+
+        res["time"] = 0.0
+        return res
         
 class SpeedSensor(Sensor):
     def __init__(self, address=None, **kwargs):
         self._address = address
-        Sensor.__init__(self, **kwargs)
+        Sensor.__init__(self, kwargs)
         
     def sense(self):
         pass
