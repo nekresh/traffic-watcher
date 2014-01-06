@@ -15,9 +15,7 @@ class PingSensor(Sensor):
         
         res = dict()
         process = subprocess.Popen(["ping", "-q", "-c", "10", self._address], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-        stdout = process.stdout
-        for l in stdout.readline():
-            print("ping> ", l)
+        for l in process.stdout:
             if "received" in l:
                 m = re.match(r'(\d+) packets transmitted, (\d+) received', l)
                 if m:
@@ -37,6 +35,8 @@ class PingSensor(Sensor):
                     res["min_time"] = min_time
                     res["avg_time"] = avg_time
                     res["max_time"] = max_time
+            elif "Destination Host Unreachable" in l:
+                res["reason"] = "unreachable"
         process.wait()
         if process.returncode <> 0:
             res["failed"] = True
