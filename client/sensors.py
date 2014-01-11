@@ -67,4 +67,19 @@ class SpeedSensor(Sensor):
         Sensor.__init__(self, kwargs)
         
     def sense(self):
-        pass
+	import requests, time
+
+	res = dict()
+	size = 0
+	t = time.time()
+	r = requests.get(self._address, stream=True)
+
+	if r.status_code == 200:
+		for chunk in r.iter_content(chunk_size=512):
+			size += len(chunk)
+		res["size"] = size
+	else:
+		res["failed"] = True
+
+	res["time"] = time.time() - t
+	return res

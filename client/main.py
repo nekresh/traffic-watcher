@@ -1,6 +1,6 @@
 import sensors
 
 d = dict()
-d["address"] = "ns-server.epita.fr"
-sensor = sensors.DnsSpeedSensor(**d)
+d["address"] = "http://python.org"
+sensor = sensors.SpeedSensor(**d)
 print(sensor.sense())
