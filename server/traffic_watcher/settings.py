@@ -30,7 +30,8 @@ _MONGODB_NAME = 'tw'
 _MONGODB_DATABASE_HOST = \
     'mongodb://%s/%s' % (_MONGODB_HOST, _MONGODB_NAME)
 
-mongoengine.connect(_MONGODB_NAME, _MONGODB_DATABASE_HOST)
+print("default mongodb connection")
+mongoengine.connect(_MONGODB_NAME, host=_MONGODB_DATABASE_HOST)
 
 AUTHENTICATION_BACKENDS = (
     'mongoengine.django.auth.MongoEngineBackend',
@@ -141,6 +142,7 @@ INSTALLED_APPS = (
     # 'django.contrib.admindocs',
     'graph',
     'tastypie',
+    'tastypie_mongoengine',
 )
 
 # A sample logging configuration. The only tangible logging
