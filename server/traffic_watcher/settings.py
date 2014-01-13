@@ -15,7 +15,7 @@ MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE': '', # Keep empty for MongoEngine
+        'ENGINE': 'django.db.backends.dummy', # Keep empty for MongoEngine
     }
 }
 
@@ -139,6 +139,7 @@ INSTALLED_APPS = (
     # 'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
+    'graph',
     'tastypie',
 )
 
