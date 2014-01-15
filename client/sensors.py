@@ -5,6 +5,24 @@ class Sensor:
     def sense(self):
         pass
 
+class SensorManager:
+    def __init__(self, baseAddress, sensor):
+	from hammock import Hammock
+
+        self._service = Hammock(baseAddress, append_slash=True).api('v1').ticks
+	self._sensor = sensor
+
+    def run(self):
+	from datetime import datetime
+	import json
+
+	result = self._sensor.sense()
+	tick = dict()
+	tick['tick_date'] = datetime.now().isoformat()
+	tick['type'] = self._sensor.__class__.__name__
+	tick['data'] = result
+	response = self._service.POST(headers={'content-type': 'application/json'}, data=json.dumps(tick))
+
 class PingSensor(Sensor):
     def __init__(self, address=None, **kwargs):
         self._address = address

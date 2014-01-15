@@ -7,3 +7,4 @@ class TicksResource(resources.MongoEngineResource):
 		queryset = models.Ticks.objects.all()
 		allowed_methods = ('get', 'post', 'patch')
 		authorization = authorization.Authorization()
+		excludes = ['insert_date']
